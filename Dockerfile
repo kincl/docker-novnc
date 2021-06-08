@@ -1,9 +1,6 @@
 FROM debian:buster
 
-# Install git, supervisor, VNC, & X11 packages
-RUN set -ex; \
-    apt-get update; \
-    apt-get install -y \
+RUN apt-get update && apt-get install -y \
       bash \
       fluxbox \
       git \
@@ -12,13 +9,13 @@ RUN set -ex; \
       supervisor \
       x11vnc \
       xterm \
-      xvfb
+      xvfb \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN ln -s /usr/share/novnc/vnc_auto.html /usr/share/novnc/index.html
 
 # Setup demo environment variables
-ENV DEBIAN_FRONTEND=noninteractive \
-    LANG=en_US.UTF-8 \
+ENV LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8 \
     LC_ALL=C.UTF-8 \
     DISPLAY=:0.0 \
